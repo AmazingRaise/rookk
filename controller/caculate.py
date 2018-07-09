@@ -60,19 +60,19 @@ class CaculateRisk(object):
 
     @property
     def sapasi1(self):
-        return self.request_json['saPASI1']
+        return int(self.request_json['saPASI1'])
 
     @property
     def sapasi2(self):
-        return self.request_json['saPASI2']
+        return int(self.request_json['saPASI2'])
 
     @property
     def sapasi3(self):
-        return self.request_json['saPASI3']
+        return int(self.request_json['saPASI3'])
 
     @property
     def sapasi4(self):
-        return self.request_json['saPASI4']
+        return int(self.request_json['saPASI4'])
 
     @property
     def sapasi5(self):
@@ -84,23 +84,23 @@ class CaculateRisk(object):
 
     @property
     def arthritis1(self):
-        return self.request_json['Arthritis1']
+        return int(self.request_json['Arthritis1'])
 
     @property
     def arthritis2(self):
-        return self.request_json['Arthritis2']
+        return int(self.request_json['Arthritis2'])
 
     @property
     def arthritis3(self):
-        return self.request_json['Arthritis3']
+        return int(self.request_json['Arthritis3'])
 
     @property
     def arthritis4(self):
-        return self.request_json['Arthritis4']
+        return int(self.request_json['Arthritis4'])
 
     @property
     def arthritis5(self):
-        return self.request_json['Arthritis5']
+        return int(self.request_json['Arthritis5'])
 
     @property
     def arthritis6(self):
@@ -108,6 +108,8 @@ class CaculateRisk(object):
 
     @property
     def risk1(self):
+        if not self.request_json['PR1']:
+            return None
         val = self.request_json['PR1']
         if val > 3:
             return 0.22
@@ -132,10 +134,14 @@ class CaculateRisk(object):
 
     @property
     def risk4(self):
-        return self.request_json['PR4'] * 3.42
+        if not self.request_json['PR4']:
+            return None
+        return int(self.request_json['PR4']) * 3.42
 
     @property
     def risk5(self):
+        if not self.request_json['PR5']:
+            return None
         return self.request_json['PR5'] * 31.5
 
     @property
@@ -151,8 +157,11 @@ class CaculateRisk(object):
 
     @property
     def risk7(self):
-        risk = self.risk1 + self.risk2 + self.risk3 + self.risk4 + self.risk5 + self.risk6
-        return risk
+        if self.risk4 and self.risk5 and self.risk1:
+            risk = self.risk1 + self.risk2 + self.risk3 + self.risk4 + self.risk5 + self.risk6
+            return risk
+        else:
+            return None
 
     def caculate(self):
         return self.sapasi5, self.arthritis6, self.risk7
