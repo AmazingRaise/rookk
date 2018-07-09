@@ -38,4 +38,4 @@ def alldata():
 
 
 if __name__ == '__main__':
-    app.run(port=2031, debug=True)
+    app.run(port=8080, debug=True)
