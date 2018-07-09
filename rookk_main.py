@@ -23,12 +23,13 @@ def alldata():
     content = {}
     json_return = {}
     try:
+        print(request.json)
         cr = CaculateRisk(request.json)
         sapsi5, arthritis6, pr7 = cr.caculate()
         content = {'saPASI': sapsi5, 'Arthritis6': arthritis6, 'PR7': pr7}
     except Exception as e:
-        app.logger('err found, please check'),
-        app.logger(e)
+        print('err found, please check'),
+        print(e)
         Result = 2
     if content:
         json_return = content
