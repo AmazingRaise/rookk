@@ -110,7 +110,7 @@ class CaculateRisk(object):
     def risk1(self):
         if not self.request_json['PR1']:
             return None
-        val = self.request_json['PR1']
+        val = int(self.request_json['PR1'])
         if val > 3:
             return 0.22
         elif val < 3:
@@ -142,7 +142,7 @@ class CaculateRisk(object):
     def risk5(self):
         if not self.request_json['PR5']:
             return None
-        return self.request_json['PR5'] * 31.5
+        return int(self.request_json['PR5']) * 31.5
 
     @property
     def risk6(self):
