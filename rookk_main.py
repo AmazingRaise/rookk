@@ -7,11 +7,12 @@
 # @Software: PyCharm Community Edition
 import os
 import json
-import time
-import traceback
+from redis_helper import RedisHelper
 from flask import Flask, session
 from flask import request
 from controller.caculate import CaculateRisk
+
+redis_helper = RedisHelper()
 app = Flask(__name__)
 
 
@@ -26,16 +27,14 @@ def alldata():
     content = {}
     json_return = {}
     try:
-        print(request.json)
+        app.logger.debug('request get...')
         cr = CaculateRisk(request.json)
         sapsi5, arthritis6, pr7 = cr.caculate()
         content = {'saPASI': sapsi5, 'Arthritis6': arthritis6, 'PR7': pr7}
+        redis_helper.public(cr.content())
     except Exception as e:
-        traceback.print_exc()
+        app.logger.exception(e)
         Result = 2
-        print('err found, please check'),
-        print(e)
-
     if content:
         json_return = content
     json_return['Result'] = Result
@@ -43,4 +42,4 @@ def alldata():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=8080, debug=True)
+    app.run(port=9160, debug=True)

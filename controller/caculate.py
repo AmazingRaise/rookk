@@ -39,7 +39,7 @@ class CaculateRisk(object):
         elif self.request_json['Sex'] == 1:
             sex = '男'
         else:
-            sex = 'None'
+            sex = ''
         return sex
 
     @property
@@ -109,7 +109,7 @@ class CaculateRisk(object):
     @property
     def risk1(self):
         if not self.request_json['PR1']:
-            return None
+            return ''
         val = int(self.request_json['PR1'])
         if val > 3:
             return 0.22
@@ -135,13 +135,13 @@ class CaculateRisk(object):
     @property
     def risk4(self):
         if not self.request_json['PR4']:
-            return None
+            return ''
         return int(self.request_json['PR4']) * 3.42
 
     @property
     def risk5(self):
         if not self.request_json['PR5']:
-            return None
+            return ''
         return int(self.request_json['PR5']) * 31.5
 
     @property
@@ -166,5 +166,11 @@ class CaculateRisk(object):
     def caculate(self):
         return self.sapasi5, self.arthritis6, self.risk7
 
-    def data_to_excel(self):
-        pass
+    def content(self):
+        return [
+            self.wx_name, self.phone_num, self.id_num, self.name, self.nick_name, self.sex, self.birthday,
+            self.height, self.weight, self.incidence_time, self.sapasi1, self.sapasi2, self.sapasi3,
+            self.sapasi4, self.sapasi5, self.quilityoflife, self.arthritis1, self.arthritis2, self.arthritis3,
+            self.arthritis4, self.arthritis5, self.arthritis6, self.risk1, self.risk2, self.risk3, self.risk4,
+            self.risk5, self.risk6, self.risk7
+        ]
