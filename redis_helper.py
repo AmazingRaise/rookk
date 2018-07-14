@@ -39,6 +39,7 @@ class RedisHelper(object):
                     val = eval(msg[2].decode('utf-8'))
                     self.result.append(val)
             if len(self.result) > 9:
+                print('result长度为：%d, 写入文件' % len(self.result))
                 excel_helper = ExcelHelper()
                 for val in self.result:
                     excel_helper.insert_data(val)
