@@ -44,7 +44,7 @@ class RedisHelper(object):
                 for val in self.result:
                     excel_helper.insert_data(val)
                 self.result = []
-            time.sleep(2)
+            time.sleep(0.1)
 
 
 if __name__ == '__main__':
