@@ -32,17 +32,18 @@ class RedisHelper(object):
 
     def get_value_from_redis(self):
         redis_sub = self.subscribe()
+        i = 0
         while True:
             msg = redis_sub.parse_response()
             if isinstance(msg, list):
                 if len(msg) > 0 and msg[1].decode('utf-8') == self.chan_sub:
                     val = eval(msg[2].decode('utf-8'))
                     self.result.append(val)
-            if len(self.result) > 9:
-                print('result长度为：%d, 写入文件' % len(self.result))
+            if len(self.result) > 99:
+                i += 1
+                print('result长度为：%d, 写入文件次数=：%d' % (len(self.result), i))
                 excel_helper = ExcelHelper()
-                for val in self.result:
-                    excel_helper.insert_data(val)
+                excel_helper.insert_data(self.result)
                 self.result = []
             time.sleep(0.1)
 
