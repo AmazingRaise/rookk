@@ -39,13 +39,13 @@ class RedisHelper(object):
                 if len(msg) > 0 and msg[1].decode('utf-8') == self.chan_sub:
                     val = eval(msg[2].decode('utf-8'))
                     self.result.append(val)
-            if len(self.result) > 99:
-                i += 1
-                print('result长度为：%d, 写入文件次数=：%d' % (len(self.result), i))
-                excel_helper = ExcelHelper()
-                for content in self.result:
-                    excel_helper.insert_data(content)
-                self.result = []
+                if len(self.result) > 99:
+                    i += 1
+                    print('result长度为：%d, 写入文件次数=：%d' % (len(self.result), i))
+                    excel_helper = ExcelHelper()
+                    for content in self.result:
+                        excel_helper.insert_data(content)
+                    self.result = []
             time.sleep(0.1)
 
 
