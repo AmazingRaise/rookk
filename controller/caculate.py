@@ -157,7 +157,7 @@ class CaculateRisk(object):
 
     @property
     def risk7(self):
-        if self.risk4 and self.risk5 and self.risk1:
+        if self.risk4 != '' and self.risk5 != '' and self.risk1 != '':
             risk = self.risk1 + self.risk2 + self.risk3 + self.risk4 + self.risk5 + self.risk6
             return risk
         else:
