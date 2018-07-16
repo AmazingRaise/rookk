@@ -30,7 +30,7 @@ def alldata():
         app.logger.debug('request get...')
         cr = CaculateRisk(request.json)
         sapsi5, arthritis6, pr7 = cr.caculate()
-        content = {'saPASI': sapsi5, 'Arthritis6': arthritis6, 'PR7': pr7}
+        content = {'saPASI': int(sapsi5), 'Arthritis6': int(arthritis6), 'PR7': round(pr7, 2)}
         redis_helper.public(cr.content())
     except Exception as e:
         app.logger.exception(e)
