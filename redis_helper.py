@@ -21,8 +21,11 @@ class RedisHelper(object):
         self.result = []
 
     def public(self, info):
-        self.__conn.publish(self.chan_pub, info)
-        return True
+        try:
+            self.__conn.publish(self.chan_pub, info)
+            return True
+        except Exception as e:
+            pass
 
     def subscribe(self):
         pub = self.__conn.pubsub()

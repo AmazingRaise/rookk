@@ -7,6 +7,7 @@
 # @Software: PyCharm Community Edition
 import os
 import json
+import traceback
 from redis_helper import RedisHelper
 from flask import Flask, session
 from flask import request
@@ -30,9 +31,10 @@ def alldata():
         app.logger.debug('request get...')
         cr = CaculateRisk(request.json)
         sapsi5, arthritis6, pr7 = cr.caculate()
-        content = {'saPASI': int(sapsi5), 'Arthritis6': int(arthritis6), 'PR7': round(pr7, 2)}
+        content = {'saPASI': int(sapsi5), 'Arthritis6': int(arthritis6), 'PR7': round(pr7, 2) if pr7 else None}
         redis_helper.public(cr.content())
     except Exception as e:
+        traceback.print_exc()
         app.logger.exception(e)
         Result = 2
     if content:

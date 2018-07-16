@@ -120,7 +120,9 @@ class CaculateRisk(object):
 
     @property
     def risk2(self):
-        return self.arthritis3 * 2.51
+        if not self.request_json['PR2']:
+            return ''
+        return int(self.request_json['PR2']) * 2.51
 
     @property
     def risk3(self):
@@ -157,7 +159,7 @@ class CaculateRisk(object):
 
     @property
     def risk7(self):
-        if self.risk4 != '' and self.risk5 != '' and self.risk1 != '':
+        if self.risk4 != '' and self.risk5 != '' and self.risk2 != '':
             risk = self.risk1 + self.risk2 + self.risk3 + self.risk4 + self.risk5 + self.risk6
             return risk
         else:
