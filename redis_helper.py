@@ -43,7 +43,8 @@ class RedisHelper(object):
                 i += 1
                 print('result长度为：%d, 写入文件次数=：%d' % (len(self.result), i))
                 excel_helper = ExcelHelper()
-                excel_helper.insert_data(self.result)
+                for content in self.result:
+                    excel_helper.insert_data(content)
                 self.result = []
             time.sleep(0.1)
 
